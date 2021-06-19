@@ -62,7 +62,7 @@ public class PayloadValidatorTest {
 		@BeforeAll
 		public static void startTest()
 		{
-		report = new ExtentReports(System.getProperty("user.dir")+"\\PayloadValidatorTest.html");
+		report = new ExtentReports("\\Desktop\\PayloadValidatorTest.html");
 		test = report.startTest("Test Cases");
 		}
 	/*
