@@ -64,7 +64,14 @@ public class PayloadValidatorTest {
 		report = new ExtentReports(System.getProperty("user.dir")+"\\PayloadValidatorTest.html");
 		test = report.startTest("Test Cases");
 		}
-	   
+	    @org.junit.jupiter.api.Test
+	    public void verifyAllToDoList() throws Exception {
+	        mockMvc.perform(MockMvcRequestBuilders.get("/todo").accept(MediaType.APPLICATION_JSON))
+	                .andExpect(jsonPath("$", hasSize(4))).andDo(print());
+	        test.log(LogStatus.PASS, "verifyAllToDoList Test Pass");
+		  	  
+	   	 
+	    }
 
 	    @org.junit.jupiter.api.Test
 	    public void verifyToDoById() throws Exception {
