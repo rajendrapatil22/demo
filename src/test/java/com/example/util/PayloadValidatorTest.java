@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,14 +65,15 @@ public class PayloadValidatorTest {
 		report = new ExtentReports(System.getProperty("user.dir")+"\\PayloadValidatorTest.html");
 		test = report.startTest("Test Cases");
 		}
-	    @org.junit.jupiter.api.Test
-	    public void verifyAllToDoList() throws Exception {
-	        mockMvc.perform(MockMvcRequestBuilders.get("/todo").accept(MediaType.APPLICATION_JSON))
-	                .andExpect(jsonPath("$", hasSize(4))).andDo(print());
-	        test.log(LogStatus.PASS, "verifyAllToDoList Test Pass");
-		  	  
-	   	 
-	    }
+	/*
+	 * @org.junit.jupiter.api.Test public void verifyAllToDoList() throws Exception
+	 * { mockMvc.perform(MockMvcRequestBuilders.get("/todo").accept(MediaType.
+	 * APPLICATION_JSON)) .andExpect(jsonPath("$", hasSize(4))).andDo(print());
+	 * test.log(LogStatus.PASS, "verifyAllToDoList Test Pass");
+	 * 
+	 * 
+	 * }
+	 */
 
 	    @org.junit.jupiter.api.Test
 	    public void verifyToDoById() throws Exception {
@@ -203,7 +205,13 @@ public class PayloadValidatorTest {
         verify(toDoRepository, times(1)).delete(toDo);
         
     }
-
+    @AfterAll
+    public static void endTest()
+    {
+    	System.out.println("Test report data");
+    report.endTest(test);
+    report.flush();
+    }
   
 
 }
