@@ -1,5 +1,31 @@
 package com.example.util;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
 import com.example.DemoApplication;
 import com.example.model.ToDo;
 import com.example.repository.ToDoRepository;
@@ -8,43 +34,11 @@ import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-import java.awt.Desktop;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DemoApplication.class)
 @SpringBootTest
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 public class PayloadValidatorTest {
 	static ExtentTest test;
 	static ExtentReports report;
@@ -59,27 +53,20 @@ public class PayloadValidatorTest {
 	    @InjectMocks
 	    private ToDoServiceImpl toDoService;
 
-	    @Before
+	    @BeforeEach
 	    public void setup() {
 	        this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 
 	    }
-		@BeforeClass
+		@BeforeAll
 		public static void startTest()
 		{
 		report = new ExtentReports(System.getProperty("user.dir")+"\\PayloadValidatorTest.html");
 		test = report.startTest("Test Cases");
 		}
-	    @Test
-	    public void verifyAllToDoList() throws Exception {
-	        mockMvc.perform(MockMvcRequestBuilders.get("/todo").accept(MediaType.APPLICATION_JSON))
-	                .andExpect(jsonPath("$", hasSize(4))).andDo(print());
-	        test.log(LogStatus.PASS, "verifyAllToDoList Test Pass");
-		  	  
-	   	 
-	    }
+	   
 
-	    @Test
+	    @org.junit.jupiter.api.Test
 	    public void verifyToDoById() throws Exception {
 	        mockMvc.perform(MockMvcRequestBuilders.get("/todo/3").accept(MediaType.APPLICATION_JSON))
 	                .andExpect(jsonPath("$.id").exists())
@@ -93,7 +80,7 @@ public class PayloadValidatorTest {
 	  	  
 	    }
 
-	    @Test
+	    @org.junit.jupiter.api.Test
 	    public void verifyInvalidToDoArgument() throws Exception {
 	        mockMvc.perform(MockMvcRequestBuilders.get("/todo/f").accept(MediaType.APPLICATION_JSON))
 	                .andExpect(jsonPath("$.errorCode").value(400))
@@ -108,7 +95,7 @@ public class PayloadValidatorTest {
 	 
 
 
-	    @Test
+	    @org.junit.jupiter.api.Test
 	    public void verifySaveToDo() throws Exception {
 	        mockMvc.perform(MockMvcRequestBuilders.post("/todo/")
 	                .contentType(MediaType.APPLICATION_JSON)
