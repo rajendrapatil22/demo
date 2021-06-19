@@ -208,7 +208,7 @@ public class PayloadValidatorTest {
     @AfterAll
     public static void endTest()
     {
-    	System.out.println("Test report data");
+    	System.out.println(System.getProperty("user.dir")+"Test report data");
     report.endTest(test);
     report.flush();
     }
