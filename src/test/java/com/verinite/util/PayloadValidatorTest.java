@@ -1,4 +1,4 @@
-package com.example.util;
+package com.verinite.util;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,6 +31,7 @@ import com.example.DemoApplication;
 import com.example.model.ToDo;
 import com.example.repository.ToDoRepository;
 import com.example.service.ToDoServiceImpl;
+import com.example.util.PayloadValidator;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -62,18 +63,18 @@ public class PayloadValidatorTest {
 		@BeforeAll
 		public static void startTest()
 		{
-		report = new ExtentReports("\\Desktop\\PayloadValidatorTest.html");
+		report = new ExtentReports("\\PayloadValidatorTest.html");
 		test = report.startTest("Test Cases");
 		}
-	/*
-	 * @org.junit.jupiter.api.Test public void verifyAllToDoList() throws Exception
-	 * { mockMvc.perform(MockMvcRequestBuilders.get("/todo").accept(MediaType.
-	 * APPLICATION_JSON)) .andExpect(jsonPath("$", hasSize(4))).andDo(print());
-	 * test.log(LogStatus.PASS, "verifyAllToDoList Test Pass");
-	 * 
-	 * 
-	 * }
-	 */
+	
+	 @org.junit.jupiter.api.Test public void verifyAllToDoList() throws Exception
+	 { mockMvc.perform(MockMvcRequestBuilders.get("/todo").accept(MediaType.
+	 APPLICATION_JSON)) .andExpect(jsonPath("$", hasSize(4))).andDo(print());
+	 test.log(LogStatus.PASS, "verifyAllToDoList Test Pass");
+	 
+	 
+	 }
+	 
 
 	    @org.junit.jupiter.api.Test
 	    public void verifyToDoById() throws Exception {
