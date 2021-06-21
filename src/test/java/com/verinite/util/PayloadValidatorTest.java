@@ -78,7 +78,7 @@ public class PayloadValidatorTest {
 
 	    @org.junit.jupiter.api.Test
 	    public void verifyToDoById() throws Exception {
-	    	 ToDo toDo = new ToDo(1, "Sample ToDo 1", true);
+	    	 ToDo toDo = new ToDo(0, "Sample ToDo 1", true);
 	         assertEquals(true, PayloadValidator.validateCreatePayload(toDo));
 	        test.log(LogStatus.PASS, "verifyToDoById Test Pass");
 	  	  
