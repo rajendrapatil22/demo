@@ -27,6 +27,11 @@
     </properties>
 
     <dependencies>
+     <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>1.5.2</version>
+ </dependency>
     <dependency>
         <groupId>org.quartz-scheduler</groupId>
         <artifactId>quartz</artifactId>
